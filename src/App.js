@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
 
@@ -10,9 +10,41 @@ function App() {
   const navigate = useNavigate();
 
   const logOut = () => {
-    setJwtToken("");
+    console.log("Logging out");
+    const requestOptions = {
+      method: "GET",
+      credentials: "include",
+    };
+    fetch("http://localhost:8080/logout", requestOptions)
+      .catch((error) => {
+        console.log("error logging out", error);
+      })
+      .finally(() => {
+        setJwtToken("");
+      });
     navigate("/login");
   };
+
+  useEffect(() => {
+    if (jwtToken === "") {
+      console.log("No token set, fetching token");
+      const requestOptions = {
+        method: "GET",
+        credentials: "include",
+      };
+      fetch("http://localhost:8080/refresh", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.access_token) {
+            setJwtToken(data.access_token);
+            console.log("JWT Token: ", data.access_token);
+          }
+        })
+        .catch((error) => {
+          console.log("could not refresh token ", error);
+        });
+    }
+  }, [jwtToken]);
 
   return (
     <div className="container">

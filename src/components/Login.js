@@ -26,6 +26,7 @@ const Login = () => {
     const requestOptions = {
       method: "POST",
       headers: headers,
+      credentials: "include",
       body: JSON.stringify(payload),
     };
 
