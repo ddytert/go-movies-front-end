@@ -127,13 +127,13 @@ function App() {
                     Add Movie
                   </Link>
                   <Link
-                    to="/manage-catalogue"
+                    to="/admin/manage-catalog"
                     className="list-group-item list-group-item-action"
                   >
-                    Manage Catalogue
+                    Manage Catalog
                   </Link>
                   <Link
-                    to="/graphql"
+                    to="/admin/graphql"
                     className="list-group-item list-group-item-action"
                   >
                     GraphQL
