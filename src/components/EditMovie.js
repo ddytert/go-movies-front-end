@@ -142,6 +142,7 @@ const EditMovie = () => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", "Bearer " + jwtToken);
+
     // assume we are adding a new movie
     let method = "PUT";
 
@@ -150,6 +151,7 @@ const EditMovie = () => {
     }
 
     const requestBody = movie;
+
     // we need to convert the values to json for release date (to date)
     // and for runtime to int
     requestBody.release_date = new Date(movie.release_date);
