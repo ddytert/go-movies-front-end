@@ -33,7 +33,7 @@ const EditMovie = () => {
   ];
 
   const hasError = (key) => {
-    return errors.indexOf(key) != -1;
+    return errors.indexOf(key) !== -1;
   };
 
   // get id from the URL
@@ -137,6 +137,43 @@ const EditMovie = () => {
     if (errors.length > 0) {
       return false;
     }
+
+    // passed validation so save changes
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", "Bearer " + jwtToken);
+    // assume we are adding a new movie
+    let method = "PUT";
+
+    if (movie.id > 0) {
+      method = "PATCH";
+    }
+
+    const requestBody = movie;
+    // we need to convert the values to json for release date (to date)
+    // and for runtime to int
+    requestBody.release_date = new Date(movie.release_date);
+    requestBody.runtime = parseInt(movie.runtime, 10);
+
+    const requestOptions = {
+      body: JSON.stringify(requestBody),
+      method: method,
+      headers: headers,
+      credentials: "include",
+    };
+
+    fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          navigate("/admin/manage-catalog");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleChange = () => (event) => {
