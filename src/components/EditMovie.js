@@ -82,7 +82,46 @@ const EditMovie = () => {
           console.log(err);
         });
     } else {
-      // editing an existing movie
+      // editing an existing movie      
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Authorization", "Bearer " + jwtToken);
+
+      const requestOptions = { method: "GET", headers: headers };
+
+      fetch(`http://localhost:8080/admin/movies/${id}`, requestOptions)
+        .then((response) => {
+          if (response.status !== 200) {
+            setError("Invalid response code: " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Movie data: ", data);
+
+          // fix release date
+          data.movie.release_date = new Date(data.movie.release_date).toISOString().split("T")[0];
+        
+          const checks = [];
+
+          data.genres.forEach(g => {
+            if (data.movie.genres_array.indexOf(g.id) != -1) {
+              checks.push({id: g.id, checked: true, genre: g.genre});
+            } else {
+              checks.push({id: g.id, checked: false, genre: g.genre});
+            }
+          })
+
+          // set state
+          setMovie({
+            ...data.movie,
+            genres: checks,
+
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
   }, [id, jwtToken, navigate]);
 
