@@ -97,8 +97,6 @@ const EditMovie = () => {
           return response.json();
         })
         .then((data) => {
-          console.log("Movie data: ", data);
-
           // fix release date
           data.movie.release_date = new Date(data.movie.release_date).toISOString().split("T")[0];
         
@@ -289,6 +287,7 @@ const EditMovie = () => {
           title={"MPAA Rating"}
           name={"mpaa_rating"}
           options={mpaaOptions}
+          value={movie.mpaa_rating}
           onChange={handleChange("mpaa_rating")}
           placeHolder={"Choose..."}
           errorMsg={"Please choose"}
