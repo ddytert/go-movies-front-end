@@ -105,7 +105,7 @@ const EditMovie = () => {
           const checks = [];
 
           data.genres.forEach((g) => {
-            if (data.movie.genres_array.indexOf(g.id) != -1) {
+            if (data.movie.genres_array.indexOf(g.id) !== -1) {
               checks.push({ id: g.id, checked: true, genre: g.genre });
             } else {
               checks.push({ id: g.id, checked: false, genre: g.genre });
@@ -265,15 +265,15 @@ const EditMovie = () => {
           headers: headers,
         };
         fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.error) {
-            console.log(data.error)
-          } else {
-            navigate("/admin/manage-catalog");
-          }
-        })
-        .catch(err => console.log(err))
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              console.log(data.error);
+            } else {
+              navigate("/admin/manage-catalog");
+            }
+          })
+          .catch((err) => console.log(err));
       }
     });
   };
