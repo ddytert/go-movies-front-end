@@ -65,7 +65,7 @@ const EditMovie = () => {
       headers.append("Content-Type", "application/json");
 
       const requestOptions = { method: "GET", headers: headers };
-      fetch(`http://localhost:8080/genres`, requestOptions)
+      fetch(`${process.env.REACT_APP_BACKEND}/genres`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           let checks = [];
@@ -89,7 +89,7 @@ const EditMovie = () => {
 
       const requestOptions = { method: "GET", headers: headers };
 
-      fetch(`http://localhost:8080/admin/movies/${id}`, requestOptions)
+      fetch(`${process.env.REACT_APP_BACKEND}/admin/movies/${id}`, requestOptions)
         .then((response) => {
           if (response.status !== 200) {
             setError("Invalid response code: " + response.status);
@@ -202,7 +202,7 @@ const EditMovie = () => {
       credentials: "include",
     };
 
-    fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
+    fetch(`${process.env.REACT_APP_BACKEND}/admin/movies/${movie.id}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -264,7 +264,7 @@ const EditMovie = () => {
           method: "DELETE",
           headers: headers,
         };
-        fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND}/admin/movies/${movie.id}`, requestOptions)
           .then((response) => response.json())
           .then((data) => {
             if (data.error) {

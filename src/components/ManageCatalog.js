@@ -21,7 +21,7 @@ const ManageCatalog = () => {
       headers: headers,
     };
 
-    fetch(`http://localhost:8080/admin/movies`, requestOptions)
+    fetch(`${process.env.REACT_APP_BACKEND}/admin/movies`, requestOptions)
       .then((response) => response.json())
       .then((data) => setMovies(data))
       .catch((err) => {

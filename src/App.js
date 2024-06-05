@@ -17,7 +17,7 @@ function App() {
       method: "GET",
       credentials: "include",
     };
-    fetch("http://localhost:8080/logout", requestOptions)
+    fetch(`${process.env.REACT_APP_BACKEND}/logout`, requestOptions)
       .catch((error) => {
         console.log("error logging out", error);
       })
@@ -38,7 +38,7 @@ function App() {
             method: "GET",
             credentials: "include",
           };
-          fetch("http://localhost:8080/refresh", requestOptions)
+          fetch(`${process.env.REACT_APP_BACKEND}/refresh`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
               if (data.access_token) {
@@ -67,7 +67,7 @@ function App() {
         method: "GET",
         credentials: "include",
       };
-      fetch("http://localhost:8080/refresh", requestOptions)
+      fetch(`${process.env.REACT_APP_BACKEND}/refresh`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data.access_token) {

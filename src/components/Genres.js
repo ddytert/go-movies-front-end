@@ -14,7 +14,7 @@ const Genres = () => {
       method: "GET",
       headers: headers,
     };
-    fetch(`http://localhost:8080/genres`, requestOptions)
+    fetch(`${process.env.REACT_APP_BACKEND}/genres`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
